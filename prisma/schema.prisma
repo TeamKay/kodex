@@ -1,0 +1,284 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                    String       @id @default(cuid())
+  name                  String
+  role                  UserRole       @default(Student)
+  email                 String    
+  grantId               String?
+  grantEmail            String?
+  emailVerified         Boolean      @default(false)
+  image                 String?
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  stripeCustomerId      String?      @unique
+  banned                Boolean?     @default(false)
+  banReason             String?
+  banExpires            DateTime?
+
+  // Student-specific fields
+  credits               Int          @default(2)
+
+  // Educator-specific fields
+  specialty             String?
+  experience            Int?
+  credentialUrl         String?   
+  description           String? @db.Text
+  verificationStatus    VetificationStatus?  @default(Pending)
+
+  // Relations
+  sessions              Session[]
+  accounts              Account[]
+  courses               Course[]
+  enrollment            Enrollment[]
+  lessonProgress        LessonProgress[]
+
+  studentBooking        Booking[]     @relation("StudentBooking")
+  educatorBooking       Booking[]     @relation("EducatorBooking")
+  availabilities        Availability[]
+  transactions          CreditTransaction[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Availability {
+  id                String    @id @default(cuid())
+  educatorId        String
+  educator          User      @relation(fields: [educatorId], references: [id], onDelete: Cascade)
+  startTime         DateTime
+  endTime           DateTime
+  status           SlotStatus  @default(Available)
+
+  @@index([educatorId, startTime])
+}
+
+model Booking {
+  id             String   @id @default(cuid())
+  studentId      String
+  student        User     @relation("StudentBooking", fields: [studentId], references: [id], onDelete: Cascade)
+  educatorId     String
+  educator       User     @relation("EducatorBooking", fields: [educatorId], references: [id], onDelete: Cascade)
+  startTime      DateTime
+  endTime        DateTime
+  status         BookingStatus   @default(Scheduled)
+  description    String?   @db.Text
+
+  // Video Session fields
+  videoSessionId      String?
+  videoSessionToken   String?
+
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  @@index([status, startTime])
+  @@index([educatorId, startTime])
+}
+
+model CreditTransaction {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete:  Cascade)
+  amount          Int
+  type            TransactionType
+  packageId       String?
+  createdAt       DateTime @default(now())
+}
+
+model RoleIntent {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  role      String
+  createdAt DateTime @default(now())
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+
+model Course {
+  id               String       @id @default(uuid())
+  title            String
+  description      String
+  fileKey          String
+  price            Int
+  duration         Int // duration in minutes
+  level            CourseLevel  @default(Beginner)
+
+  stripePriceId    String       @unique
+
+  category         String
+  smallDescription String
+  slug             String       @unique
+  status           CourseStatus @default(Draft)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String
+  chapter         Chapter[]
+  enrollment      Enrollment[]
+}
+
+model Chapter {
+  id        String   @id @default(uuid())
+  
+  title     String
+  position  Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId  String
+
+  lessons   Lesson[]
+}
+
+model Lesson {
+  id        String   @id @default(uuid())
+
+  title         String
+  description   String?
+  thumbnailKey  String?
+  videoKey  String?
+  position Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapterId String
+
+  lessonProgress LessonProgress[]
+}
+
+model Enrollment {
+  id String @id @default(uuid())
+
+  amount Int
+  status EnrollmentStatus @default(Pending)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Course    Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId  String
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@unique([userId, courseId])
+}
+
+model LessonProgress {
+  id String @id @default(uuid())
+
+  completed Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  Lesson Lesson     @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId String
+
+  @@unique([userId, lessonId])
+}
+
+enum UserRole {
+  Student
+  Educator
+  Admin
+}
+
+enum VetificationStatus {
+  Pending
+  Verified
+  Rejected
+}
+
+enum SlotStatus {
+  Available
+  Booked
+  Blocked
+}
+
+enum BookingStatus {
+  Scheduled
+  Completed
+  Cancelled
+}
+
+enum TransactionType {
+  Credit_Purchase
+  Appointment_Deduction
+  Admin_Adjustment
+}
+
+enum CourseLevel {
+  Beginner
+  Intermediate
+  Advanced
+}
+
+enum CourseStatus {
+  Draft
+  Published
+  Archived
+}
+enum EnrollmentStatus {
+  Pending
+  Active
+  Cancelled
+}
