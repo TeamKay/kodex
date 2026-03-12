@@ -1,4 +1,3 @@
-
 import { getAllCourses } from "@/app/actions/get-all-courses";
 import { PublicCourseCard, PublicCourseCardSkeleton } from "../_components/PublicCourseCard";
 import { Suspense } from "react";
@@ -7,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default function PublicCourseRoute(){
     return (
-        <div className="mt-5">
+        <div className="mt-5 px-4 md:px-8 max-w-7xl mx-auto">
             <div className="flex flex-col space-y-2 mb-10">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tighter">Explore Courses</h1>
             </div>
@@ -33,7 +32,7 @@ async function RenderCourses(){
 
 function LoadingSkeletonLayout(){
     return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {Array.from({length: 9}).map((_, index) => (
+        {Array.from({length: 8}).map((_, index) => (
             <PublicCourseCardSkeleton key={index} />
         ))}
     </div>

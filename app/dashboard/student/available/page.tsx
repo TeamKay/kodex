@@ -4,7 +4,7 @@ import { getEnrolledCourses } from "@/app/actions/get-enrolled-courses";
 import { EmptyState } from "@/components/general/EmptyState";
 
 
-export default async function StudentDashboardPage(){
+export default async function AvailableCoursesPage(){
   const [courses, enrolledCourses] = await Promise.all([getAllCourses(), getEnrolledCourses()]);
   return (
     <>

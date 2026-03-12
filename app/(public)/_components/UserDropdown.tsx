@@ -1,9 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { BookOpenIcon, ChevronDownIcon, Home, LayoutDashboardIcon, LogOutIcon } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,17 +9,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Home, BookOpenIcon, LayoutDashboardIcon, LogOutIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useSignOut } from "@/hooks/use-signout";
+import Link from "next/link";
 
 interface UserDropdownProps {
-  name: string;
   email: string;
-  image?: string;
+  image: string;
+  name: string;
   role: string;
 }
 
-export function UserDropdown({ name, email, image, role }: UserDropdownProps) {
+export function UserDropdown({ email, image, name, role }: UserDropdownProps) {
   const router = useRouter();
   const handleSignOut = useSignOut();
 
@@ -40,52 +40,48 @@ const handleDashboardClick = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
-          <Avatar>
-            <AvatarImage src={image ?? ""} alt="Profile image" />
-            <AvatarFallback>{name?.[0]?.toUpperCase() ?? "U"}</AvatarFallback>
+        <Button variant="ghost" className="relative h-9 w-9 rounded-full ring-offset-background transition-all hover:ring-2 hover:ring-primary/20">
+          <Avatar className="h-9 w-9 border">
+            <AvatarImage src={image} alt={name} />
+            <AvatarFallback className="bg-primary/10 text-xs">{name.charAt(0)}</AvatarFallback>
           </Avatar>
-          <ChevronDownIcon size={16} className="opacity-60" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
-
-      <DropdownMenuContent align="end" className="min-w-60 p-5">
-        <DropdownMenuLabel className="flex flex-col min-w-20">
-          <span className="text-foreground truncate text-sm font-medium">{name} ({role})</span>
-          <span className="text-muted-foreground truncate text-xs font-normal">{email}</span>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{name} ({role})</p>
+            <p className="text-xs leading-none text-muted-foreground">{email}</p>
+          </div>
         </DropdownMenuLabel>
-
         <DropdownMenuSeparator />
-
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/" className="flex items-center">
-              <Home size={16} className="opacity-60" />
-              <span className="ml-2">Home</span>
-            </Link>
-          </DropdownMenuItem>
+             <DropdownMenuItem asChild>
+               <Link href="/" className="flex items-center">
+                 <Home size={16} className="opacity-60" />
+                 <span className="ml-2">Home</span>
+               </Link>
+             </DropdownMenuItem>
 
-          <DropdownMenuItem asChild>
-            <Link href="/courses" className="flex items-center">
-              <BookOpenIcon size={16} className="opacity-60" />
-              <span className="ml-2">Courses</span>
-            </Link>
-          </DropdownMenuItem>
+             <DropdownMenuItem asChild>
+               <Link href="/courses" className="flex items-center">
+                 <BookOpenIcon size={16} className="opacity-60" />
+                 <span className="ml-2">Courses</span>
+               </Link>
+             </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={handleDashboardClick} className="flex items-center cursor-pointer">
-            <LayoutDashboardIcon size={16} className="opacity-60" />
-            <span className="ml-2">Dashboard</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-
+             <DropdownMenuItem onClick={handleDashboardClick} className="flex items-center cursor-pointer">
+               <LayoutDashboardIcon size={16} className="opacity-60" />
+               <span className="ml-2">Dashboard</span>
+             </DropdownMenuItem>
+           </DropdownMenuGroup>
         <DropdownMenuSeparator />
-
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={handleSignOut} className="flex items-center cursor-pointer">
-            <LogOutIcon size={16} className="opacity-60" />
-            <span className="ml-2">Logout</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+             <DropdownMenuItem onClick={handleSignOut} className="flex items-center cursor-pointer">
+               <LogOutIcon size={16} className="opacity-60" />
+               <span className="ml-2">Logout</span>
+             </DropdownMenuItem>
+           </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );

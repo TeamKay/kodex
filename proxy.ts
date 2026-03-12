@@ -10,7 +10,10 @@ const aj = arcjet({
       mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
       // Block all bots except the following
       allow: [
-        "CATEGORY:SEARCH_ENGINE", "CATEGORY:MONITOR","CATEGORY:PREVIEW","STRIPE_WEBHOOK" // Google, Bing, etc
+        "CATEGORY:SEARCH_ENGINE", 
+        "CATEGORY:MONITOR",
+        "CATEGORY:PREVIEW",
+        "STRIPE_WEBHOOK" // Google, Bing, etc
         // Uncomment to allow these other common bot categories
         // See the full list at https://arcjet.com/bot-list
         //"CATEGORY:MONITOR", // Uptime monitoring services
@@ -46,3 +49,24 @@ export default createMiddleware(aj, async (request: NextRequest) => {
 
 	return NextResponse.next();
 });
+
+
+export function middleware(req: NextRequest) {
+  const role = req.cookies.get("role")?.value;
+
+  const url = req.nextUrl.pathname;
+
+  if (url.startsWith("/admin") && role !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  if (url.startsWith("/educator") && role !== "educator") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  if (url.startsWith("/student") && role !== "student") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  return NextResponse.next();
+}

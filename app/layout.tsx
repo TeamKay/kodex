@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import FooterPage from "./(public)/_components/FooterPage";
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { Inter, Playfair_Display } from "next/font/google";
+
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
   subsets: ["latin"],
+  variable: "--font-playfair",
 });
+
 
 export const metadata: Metadata = {
   title: "Justdy | Learning made easy",
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children } : { children: React.ReactNode}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -36,7 +38,7 @@ export default function RootLayout({ children } : { children: React.ReactNode}) 
             {children}
             <Toaster closeButton position="bottom-center"/>
 
-            <FooterPage/>
+            {/* <FooterPage/> */}
           </ThemeProvider>
       </body>
     </html>

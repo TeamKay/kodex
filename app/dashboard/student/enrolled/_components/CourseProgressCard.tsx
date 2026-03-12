@@ -34,7 +34,7 @@ export function CourseProgressCard({data}: iAppProps){
 
               <CardContent className="p-4">
                 <Link
-                  className="font-medium text-lg line-clamp-2 hover:underline group-hover:text-primary transition-colors" href={`/dashboard/${data.Course.slug}`}>
+                  className="font-medium text-lg line-clamp-2 hover:underline group-hover:text-primary transition-colors" href={`/dashboard/student/enrolled/${data.Course.slug}`}>
                     {data.Course.title}
                 </Link>
                 <p className="line-clamp-2 text-sm text-muted-foreground leading-tight mt-2">{data.Course.smallDescription}</p>
@@ -48,7 +48,7 @@ export function CourseProgressCard({data}: iAppProps){
                     <p className="text-xs text-muted-foreground mt-1">{completedLessons} of {totalLessons} lessons completed</p>
                 </div>
 
-                <Link href={`/dashboard/${data.Course.slug}`} className={buttonVariants({
+                <Link href={`/dashboard/student/enrolled/${data.Course.slug}`} className={buttonVariants({
                     className: "w-full mt-4"
                 })}>
                 Learn More

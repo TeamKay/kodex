@@ -30,7 +30,7 @@ export default function PaymentSuccessful(){
                         Your payment was successful. You should now have full access to the course.
                     </p>
                 
-                    <Link href="/dashboard" className={buttonVariants({ className: "w-full mt-5" })}>
+                    <Link href="/dashboard/student" className={buttonVariants({ className: "w-full mt-5" })}>
                     <ArrowLeft className="size-4" />
                     Go to Dashboard
                     </Link>

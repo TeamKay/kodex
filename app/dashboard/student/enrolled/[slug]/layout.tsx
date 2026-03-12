@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { CourseSidebar } from "../_components/CourseSidebar";
 import { getCourseSidebarData } from "@/app/actions/get-course-sidebar-data";
+import { CourseSidebar } from "../_components/CourseSidebar";
 
 
 interface iAppProps {

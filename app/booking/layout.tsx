@@ -6,7 +6,7 @@ import { BookingLinks } from "./bookingLinks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import { ThemeToggle } from "@/components/ui/themeToggle";
+import { ThemeToggle } from "@/app/(public)/_components/themeToggle";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 

@@ -54,8 +54,8 @@ export async function CreateCourse(values: CourseSchemaType): Promise<ApiRespons
         default_price_data: {
             currency: 'usd',
             unit_amount: validation.data.price * 100,
-        }
-      })
+        },
+      });
 
       await prisma.course.create({
             data: {

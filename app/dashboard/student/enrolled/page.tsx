@@ -1,10 +1,10 @@
 import { getEnrolledCourses } from "@/app/actions/get-enrolled-courses";
 import { EmptyState } from "@/components/general/EmptyState";
-import { CourseProgressCard } from "../../_components/CourseProgressCard";
+import { CourseProgressCard } from "./_components/CourseProgressCard";
 
 
 
-export default async function StudentDashboardPage(){
+export default async function EnrolledCoursesPage(){
   const [enrolledCourses] = await Promise.all([getEnrolledCourses()]);
   return (
     <>

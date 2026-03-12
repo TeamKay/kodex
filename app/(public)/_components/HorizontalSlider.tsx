@@ -1,66 +1,97 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Calculator, Code, BarChart3 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { BookOpen } from "lucide-react";
 
-interface Slide {
-  icon: React.ReactNode;
-  content: string;
+interface Props {
+  categories: string[];
+  speed?: number;
 }
 
-const slidesData: Slide[] = [
-  { icon: <Calculator size={20} />, content: "Live and interactive online sessions that quarantee success" },
-  { icon: <Code size={20} />, content: "Explore comprehensive course catelog, and learn something new" },
-  { icon: <BarChart3 size={20} />, content: "Join a community of smart and educated professionals" },
-];
-
-const InfiniteSlider: React.FC = () => {
+export default function CategorySlider({ categories, speed = 0.5 }: Props) {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+
+  // 6x duplication ensures no gaps on ultra-wide screens
+  const slides = [...categories, ...categories, ...categories, ...categories, ...categories, ...categories];
 
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;
 
     let x = 0;
-    let rafId: number;
-    const speed = 1.2;
-    const totalWidth = slider.scrollWidth / 2;
+    let raf: number;
 
     const animate = () => {
-      x += speed;
-      if (x >= totalWidth) x = 0;
-      slider.style.transform = `translateX(-${x}px)`;
-      rafId = requestAnimationFrame(animate);
+      if (!paused) {
+        x += speed;
+        // Reset point adjusted for 6x duplication
+        if (x >= slider.scrollWidth / 6) {
+          x = 0;
+        }
+        slider.style.transform = `translate3d(-${x}px, 0, 0)`;
+      }
+      raf = requestAnimationFrame(animate);
     };
 
-    rafId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, [paused, speed]);
 
   return (
-    <div className="w-full overflow-hidden mb-10">
-      <div ref={sliderRef} className="flex">
-        {[...slidesData, ...slidesData].map((slide, i) => (
-          <div
-            key={i}
-            className="shrink-0 px-2"
-            style={{ width: "520px" }}>
-            <div className="h-10 flex items-center gap-3 border rounded-lg px-4 text-gray-800">
-              {/* Icon */}
-              <span className="text-gray-600">
-                {slide.icon}
-              </span>
+    // Background adapts to dark mode
+    <div className="w-full py-12 bg-white dark:bg-zinc-950">
+      
+      {/* VIEWPORT: Controls the side padding/gutter */}
+      <div 
+        className="relative mx-auto max-w-7xl px-8 md:px-16 overflow-hidden"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        
+        {/* Left Shadow Fade - Adapts to dark mode */}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 z-20 
+          bg-linear-to-r from-white via-white/80 to-transparent 
+          dark:from-zinc-950 dark:via-zinc-950/80 dark:to-transparent" 
+        />
 
-              {/* Content */}
-              <span className="text-sm text-primary dark:text-white/50 font-medium whitespace-nowrap">
-                {slide.content}
-              </span>
-            </div>
+        {/* Right Shadow Fade - Adapts to dark mode */}
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 z-20 
+          bg-linear-to-l from-white via-white/80 to-transparent 
+          dark:from-zinc-950 dark:via-zinc-950/80 dark:to-transparent" 
+        />
+
+        <div className="flex py-4">
+          <div 
+            ref={sliderRef} 
+            className="flex gap-4 will-change-transform"
+          >
+            {slides.map((category, i) => (
+              <button 
+                key={i} 
+                className={`
+                  flex items-center gap-3 px-6 py-3 border rounded-xl whitespace-nowrap shadow-sm
+                  transition-all duration-300 ease-out
+                  
+                  /* LIGHT MODE STYLES */
+                  bg-white border-gray-200 text-gray-700
+                  
+                  /* DARK MODE STYLES */
+                  dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300
+                  
+                  /* HOVER POP ANIMATION */
+                  hover:-translate-y-2 hover:scale-105 hover:shadow-xl
+                  hover:border-blue-400 dark:hover:border-blue-500
+                  hover:bg-gray-50 dark:hover:bg-zinc-800
+                `}
+              >
+                <BookOpen size={18} className="text-blue-500 dark:text-blue-400" />
+                <span className="text-sm font-semibold">{category}</span>
+              </button>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
-};
-
-export default InfiniteSlider;
+}

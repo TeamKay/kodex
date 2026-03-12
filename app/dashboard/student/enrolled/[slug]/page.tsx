@@ -14,7 +14,7 @@ export default async function CourseSlugRoute({params}: iAppProps){
     const firstLesson = firstChapter.lessons[0];
 
     if(firstLesson){
-        redirect(`/dashboard/${slug}/${firstLesson.id}`);
+        redirect(`/dashboard/student/enrolled/${slug}/${firstLesson.id}`);
     }
     return (
         <div className="flex items-center justify-center h-full text-center">

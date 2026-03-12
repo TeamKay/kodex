@@ -46,6 +46,7 @@ export async function enrollInCourseAction(courseId: string): Promise<ApiRespons
                 title: true,
                 price: true,
                 slug: true,
+                stripePriceId: true,
             },
         });
 
@@ -140,7 +141,7 @@ export async function enrollInCourseAction(courseId: string): Promise<ApiRespons
                 customer: stripeCustomerId,
                 line_items: [
                     {
-                        price: "price_1Sw0aAF115MtVFXmLp59jfXF",
+                        price: course.stripePriceId,  //price_1T7nQ7FJyix524XbCh8UWfVK
                         quantity: 1,
                     },
                 ],
@@ -163,7 +164,7 @@ export async function enrollInCourseAction(courseId: string): Promise<ApiRespons
 
         checkoutUrl = result.checkoutUrl as string;
      
-    }catch (error) {
+    } catch (error) {
         if(error instanceof Stripe.errors.StripeError){
             return {
                 status: 'error',

@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import Link from "next/link";
 import { PublicCourseCard } from "./PublicCourseCard";
 
 export default async function LatestCourses() {
@@ -7,35 +6,25 @@ export default async function LatestCourses() {
     orderBy: [
       { createdAt: "desc" }
     ],
-    take: 4
+    take: 3
   });
 
   return (
     <section className="py-6">
-                <div className="max-w-7xl mx-auto px-0">
+        {/* Changed px-0 to responsive padding classes */}
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
     
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-2xl font-bold">
-                            Latest courses 
-                        </h2>
-    
-                        <Link href="/courses" className=" font-medium hover:underline">
-                            Explore all →
-                        </Link>
-                    </div>
-    
-                    {/* Cards Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-cols-fr">
-                    {courses.map((course) => (
-                        <PublicCourseCard
+            {/* Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-cols-fr">
+                {courses.map((course) => (
+                    <PublicCourseCard
                         key={course.id}
                         data={course}
-                        />
-                    ))}
-                    </div>
-    
-                </div>
-            </section>
+                    />
+                ))}
+            </div>
+
+        </div>
+    </section>
   );
 }

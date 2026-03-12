@@ -2,7 +2,7 @@
 
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { ThemeToggle } from "../ui/themeToggle"
+import { ThemeToggle } from "../../app/(public)/_components/themeToggle"
 import { useSession } from "@/lib/auth-client"
 
 

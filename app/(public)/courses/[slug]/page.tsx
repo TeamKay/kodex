@@ -21,7 +21,9 @@ export default async function SlugPage({params}: {params: Params}){
     const course = await getIndividualCourse(slug);
     const isEnrolled = await checkIfCourseBought(course.id)
     
-    return <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 mt-5">
+    return (
+        <div className="max-w-7xl mx-auto px-4 md:px-8 mt-5">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="order-1 lg:col-span-2">
             <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
                 <Image 
@@ -232,7 +234,7 @@ export default async function SlugPage({params}: {params: Params}){
                         </div>
 
                      {isEnrolled ? (
-                        <Link className={buttonVariants({className: "w-full"})} href="/dashboard">
+                        <Link className={buttonVariants({className: "w-full"})} href="/dashboard/student/enrolled/">
                         Watch Course
                         </Link>
                      ): (
@@ -245,4 +247,5 @@ export default async function SlugPage({params}: {params: Params}){
             </div>
         </div>
     </div>
-}
+      </div>
+    )};

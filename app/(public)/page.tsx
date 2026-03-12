@@ -8,35 +8,21 @@ import Testimonials from "./_components/Testimonials";
 import CallToAction from "./_components/CallToAction";
 import LandingPage from "./_components/LandingPage";
 import Pricing from "./_components/Pricing";
+import HorizontalSlider from "./_components/HorizontalSlider";
+import { getCategories } from "../actions/getCategories";
 
 
 export default async function HomePage() {
+   const categories = await getCategories();
   return (
     <>
       <LandingPage />
-      <HowItWork/>
+      <HorizontalSlider categories={categories} />;
+   <HowItWork/>
 
-      <Suspense 
-        fallback={<LoadingSkeletonLayout/>}>
-                <LatestCourses />
-        </Suspense>   
-
-       <CreditBenefits/>
-      <Pricing/>
-
-      <Testimonials/>
-
-      <CallToAction/>
+        <CallToAction/>
     </>
   );
-}
-
-function LoadingSkeletonLayout(){
-    return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {Array.from({length: 9}).map((_, index) => (
-            <PublicCourseCardSkeleton key={index} />
-        ))}
-    </div>
 }
 
 
