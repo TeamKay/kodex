@@ -8,7 +8,6 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { updateLesson } from "../actions";
 import { toast } from "sonner";
 import { Button, buttonVariants } from "@/app/_components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card";
@@ -16,6 +15,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/app/_components/ui/input";
 import { RichTextEditor } from "@/app/_components/rich-text-editor/Editor";
 import { Uploader } from "@/app/_components/file-uploader/Uploader";
+import { updateLesson } from "../actions/update-lesson";
 
 interface iAppProps {
     data: AdminLessonType;

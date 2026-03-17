@@ -3,12 +3,12 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import Logo from "@/public/images/logo.png";
 import { BookingLinks } from "./bookingLinks";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { ThemeToggle } from "@/app/_components/themeToggle";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { Sheet, SheetContent, SheetTrigger } from "../_components/ui/sheet";
+import { Button } from "../_components/ui/button";
 
 
 async function getData(userId: string){

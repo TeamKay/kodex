@@ -2,7 +2,8 @@
 import Image from "next/image"
 import { Check } from "lucide-react"
 import Link from "next/link"
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "./ui/button"
+
 
 export default function GameHeroLanding() {
   return (
