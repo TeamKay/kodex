@@ -1,7 +1,8 @@
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { ArrowLeft, ShieldX } from "lucide-react";
 import Link from "next/link";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../_components/ui/card";
+import { buttonVariants } from "../_components/ui/button";
 
 export default function NotAdminRoute(){
     return <div className="min-h-screen flex items-center justify-center">

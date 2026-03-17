@@ -1,4 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/app/_components/ui/skeleton";
+
 
 export function LessonSkeleton(){
     return(

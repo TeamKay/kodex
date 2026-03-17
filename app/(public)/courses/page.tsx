@@ -1,5 +1,5 @@
 import { getAllCourses } from "@/app/actions/get-all-courses";
-import { PublicCourseCard, PublicCourseCardSkeleton } from "../_components/PublicCourseCard";
+import { PublicCourseCard, PublicCourseCardSkeleton } from "../../_components/PublicCourseCard";
 import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";

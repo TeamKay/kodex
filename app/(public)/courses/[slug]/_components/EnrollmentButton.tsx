@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import { enrollInCourseAction } from "@/app/actions/enroll-in-course-button";
+import { Button } from "@/app/_components/ui/button";
 
 
 export function EnrollmentButton({ courseId }: { courseId: string }) {

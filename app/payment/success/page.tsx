@@ -1,7 +1,7 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { buttonVariants } from "@/app/_components/ui/button";
+import { Card, CardContent } from "@/app/_components/ui/card";
 import { useConfetti } from "@/hooks/use-confetti";
 import { ArrowLeft, CheckIcon } from "lucide-react";
 import Link from "next/link";

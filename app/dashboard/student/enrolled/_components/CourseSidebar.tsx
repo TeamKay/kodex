@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Progress } from "@/components/ui/progress";
 import { ChevronDown, Play } from "lucide-react";
 import { LessonItem } from "./LessonItem";
 import { usePathname } from "next/navigation";
 import { useCourseProgress } from "@/hooks/use-course-progress";
 import { CourseSidebarDataType } from "@/app/actions/get-course-sidebar-data";
+import { Progress } from "@/app/_components/ui/progress";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/app/_components/ui/collapsible";
+import { Button } from "@/app/_components/ui/button";
 
 
 interface iAppProps {

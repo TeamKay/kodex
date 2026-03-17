@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
-import FooterPage from "./(public)/_components/FooterPage";
-
-
 import { Inter, Playfair_Display } from "next/font/google";
+import { Toaster } from "./_components/ui/sonner";
+import { ThemeProvider } from "./_components/ui/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],

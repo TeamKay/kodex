@@ -1,9 +1,5 @@
 
-import { RenderDescription } from "@/components/rich-text-editor/RenderDescription";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Separator } from "@/components/ui/separator";
+
 import { env } from "@/lib/env";
 import { IconBook, IconCategory, IconChartBar, IconChevronDown, IconClock, IconPlayerPlay } from "@tabler/icons-react";
 import { CheckIcon } from "lucide-react";
@@ -11,8 +7,13 @@ import Image from "next/image";
 import { checkIfCourseBought } from "@/app/actions/user-is-enrolled";
 import Link from "next/link";
 import { EnrollmentButton } from "./_components/EnrollmentButton";
-import { buttonVariants } from "@/components/ui/button";
 import { getIndividualCourse } from "@/app/actions/get-course";
+import { Badge } from "@/app/_components/ui/badge";
+import { Separator } from "@/app/_components/ui/separator";
+import { RenderDescription } from "@/app/_components/rich-text-editor/RenderDescription";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/app/_components/ui/collapsible";
+import { Card, CardContent } from "@/app/_components/ui/card";
+import { buttonVariants } from "@/app/_components/ui/button";
 
 type Params = Promise<{ slug: string}>;
 

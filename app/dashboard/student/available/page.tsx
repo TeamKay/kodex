@@ -1,7 +1,8 @@
-import { PublicCourseCard } from "@/app/(public)/_components/PublicCourseCard";
+import { EmptyState } from "@/app/_components/general/EmptyState";
+import { PublicCourseCard } from "@/app/_components/PublicCourseCard";
 import { getAllCourses } from "@/app/actions/get-all-courses";
 import { getEnrolledCourses } from "@/app/actions/get-enrolled-courses";
-import { EmptyState } from "@/components/general/EmptyState";
+
 
 
 export default async function AvailableCoursesPage(){

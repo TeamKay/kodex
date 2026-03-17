@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Loader, Send } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -12,10 +10,14 @@ import Image from "next/image";
 import { z } from 'zod'
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { authClient } from "@/lib/auth-client";
 import { loginSchema } from "@/lib/zodSchemas";
 import mmm from '@/public/images/login.jpeg'
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/app/_components/ui/form";
+import { Input } from "@/app/_components/ui/input";
+import { Button } from "@/app/_components/ui/button";
+import Cookies from 'js-cookie';
+import { User } from "@/lib/auth";
 
 
 export default function LoginForm() {
@@ -33,11 +35,29 @@ export default function LoginForm() {
 
   async function signInWithEmail(values: z.infer<typeof loginSchema>) {
     setLoading(true);
-    const { error } = await authClient.signIn.email({
+    const { data, error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
     });
 
+    if (data && data.user) {
+    // 1. Get the role from the response
+  
+    const role = (data.user as User).role?.toLowerCase() || "student";
+
+
+    // 2. Set the cookie using the library (Fixes the "value cannot be modified" error)
+    Cookies.set('role', role, { 
+      expires: 7, // 7 days
+      path: '/',
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production' 
+    });
+
+    // 3. Manual redirect to the correct dashboard
+    router.push(`/dashboard/${role}`);
+  }
+  
     if (error) {
       setLoading(false);
       if (error.status === 401 || error.code === "INVALID_EMAIL_OR_PASSWORD") {

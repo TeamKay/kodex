@@ -1,8 +1,9 @@
 // AuthLayout.tsx
-import { buttonVariants } from "@/components/ui/button";
+
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { buttonVariants } from "../_components/ui/button";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (

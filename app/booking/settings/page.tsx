@@ -1,4 +1,4 @@
-import { SettingsForm } from "@/app/(public)/_components/SettingsForm";
+import { SettingsForm } from "@/app/_components/SettingsForm";
 import { requireUser } from "@/app/actions/require-student";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";

@@ -15,3 +15,5 @@ export const {
     signUp,
     useSession
 } = authClient;
+
+export type User = typeof authClient.$Infer.Session.user;

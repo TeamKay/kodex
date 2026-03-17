@@ -1,8 +1,5 @@
 "use client";
 
-
-import { RenderDescription } from "@/components/rich-text-editor/RenderDescription";
-import { Button } from "@/components/ui/button";
 import { tryCatch } from "@/hooks/try-catch";
 import { useConstructUrl } from "@/hooks/use-construct-url";
 import { BookIcon, CheckCircle } from "lucide-react";
@@ -11,6 +8,8 @@ import { markLessonComplete } from "../actions";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/use-confetti";
 import { LessonContentType } from "@/app/actions/get-lesson-content";
+import { Button } from "@/app/_components/ui/button";
+import { RenderDescription } from "@/app/_components/rich-text-editor/RenderDescription";
 
 interface iAppProps {
     data: LessonContentType

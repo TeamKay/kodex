@@ -1,0 +1,45 @@
+import "server-only";
+
+
+import prisma from "@/lib/prisma";
+import { requireEducator } from "./require-educator";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+
+export async function educatorGetCourses(){
+    const session = await auth.api.getSession({
+        headers: await headers()
+      });
+    const userId = session?.user?.id;
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await requireEducator();
+
+    if (!userId) throw new Error("Unauthorized");
+
+    const data = await prisma.course.findMany({
+        where: {userId: userId,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+        select: {
+            id: true,
+            title: true,
+            smallDescription: true,
+            duration: true,
+            level: true,
+            status: true,
+            price: true,
+            fileKey: true,
+            slug: true,
+            _count:{
+                select: {
+                    enrollment: true,
+                }
+            }
+        },
+    });
+    return data;
+}
+
+export type AdminCourseType = Awaited<ReturnType<typeof educatorGetCourses>>[number];

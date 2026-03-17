@@ -4,6 +4,15 @@ import prisma from "./prisma";
 import { resend } from "./resend";
 import { emailOTP } from "better-auth/plugins";
 
+// @/lib/auth.ts
+
+export interface User {
+  id: string;
+  email: string;
+  role?: string;
+  // ... other fields
+}
+
 export const auth = betterAuth({
   appName: "better_auth_nextjs",
   database: prismaAdapter(prisma, {
@@ -15,6 +24,11 @@ export const auth = betterAuth({
       role: {
         type: "string",
         defaultValue: "Student",
+        input: false,
+        required: false,
+        role: {
+          type: "string",
+        }
       },
     },
   },

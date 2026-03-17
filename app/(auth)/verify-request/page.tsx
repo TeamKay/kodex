@@ -1,16 +1,16 @@
 "use client";
 
 import { Suspense } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import { useRouter, useSearchParams } from "next/navigation";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { useEffect, useState, useTransition } from "react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { Loader2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { verifyAndAssignRole } from "@/app/actions/verify-and-assign-role";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/app/_components/ui/input-otp";
+import { Button } from "@/app/_components/ui/button";
 
 /* ------------------ INNER COMPONENT ------------------ */
 function VerifyRequestContent() {

@@ -1,6 +1,6 @@
 import { getEnrolledCourses } from "@/app/actions/get-enrolled-courses";
-import { EmptyState } from "@/components/general/EmptyState";
 import { CourseProgressCard } from "./_components/CourseProgressCard";
+import { EmptyState } from "@/app/_components/general/EmptyState";
 
 
 

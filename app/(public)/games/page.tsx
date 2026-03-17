@@ -1,5 +1,5 @@
 
-import GameHeroLanding from "../_components/GameHeroLanding";
+import GameHeroLanding from "../../_components/GameHeroLanding";
 
 export default async function HomePage() {
   return (
