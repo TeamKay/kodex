@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{
-      hostname: "justdy.t3.storage.dev",
+      
+      hostname: 'i.pravatar.cc',
       port: '',
       protocol: 'https',
     }]

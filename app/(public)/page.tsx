@@ -1,21 +1,22 @@
-import HowItWork from "../_components/HowItWork";
-import Testimonials from "../_components/Testimonials";
-import CallToAction from "../_components/CallToAction";
 import LandingPage from "../_components/LandingPage";
-import HorizontalSlider from "../_components/HorizontalSlider";
-import { getCategories } from "../actions/getCategories";
+import { CourseRoadmap } from "../_components/CourseRoadmap";
+import { Prerequisites } from "../_components/Prerequisites";
+import { SuccessStories } from "../_components/SuccessStories";
+import { FooterCTA } from "../_components/CallToAction";
 
 
-export default async function HomePage() {
-   const categories = await getCategories();
+export default function HomePage() {
   return (
-    <>
+    <main className="min-h-screen">
+      <>
       <LandingPage />
-      <HorizontalSlider categories={categories} />
-      <HowItWork/>
-      <Testimonials/>
-      <CallToAction/>
+      <CourseRoadmap/>
+      <Prerequisites/>
+      <SuccessStories/>
+      <FooterCTA/>
     </>
+    </main>
+    
   );
 }
 

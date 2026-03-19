@@ -2,25 +2,19 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Menu, X, BookOpen, Video, Users, Bot, Sparkles,ArrowRight, LayoutDashboard} from "lucide-react";
+import { Menu, X, MessageCircle, Mail, Sparkles, LayoutDashboard, Code, Palette, Terminal } from "lucide-react";
 import clsx from "clsx";
-import Logo from "@/public/images/logo.png";
-import { ThemeToggle } from "@/app/_components/themeToggle";
 import { authClient } from "@/lib/auth-client";
-import { usePathname } from "next/navigation";
-
 import { UserDropdown } from "./UserDropdown";
 import { buttonVariants } from "./ui/button";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle, NavigationMenuViewport } from "./ui/navigation-menu";
 
-const productItems = [
-  { title: "Courses", href: "/courses", description: "Learn at your own pace.", icon: <BookOpen className="h-5 w-5 text-blue-500" /> },
-  { title: "Live Sessions", href: "/live-sessions", description: "Real-time workshops.", icon: <Video className="h-5 w-5 text-red-500" /> },
-  { title: "Communities", href: "/communities", description: "Connect with peers.", icon: <Users className="h-5 w-5 text-green-500" /> },
-  { title: "AI Tutor", href: "/ai-tutor", description: "24/7 AI assistance.", icon: <Bot className="h-5 w-5 text-purple-500" /> },
+// Updated Course Items for the Dropdown
+const courseItems = [
+  { title: "Certified Nursing Assistance", href: "/courses/web-dev", description: "Master modern React and Next.js.", icon: <Code className="h-5 w-5 text-blue-500" /> },
+  { title: "UI/UX Design", href: "/courses/design", description: "Learn Figma and design systems.", icon: <Palette className="h-5 w-5 text-pink-500" /> },
+  { title: "Backend Systems", href: "/courses/backend", description: "Node.js, Databases, and Scaling.", icon: <Terminal className="h-5 w-5 text-green-500" /> },
 ];
-
 
 const DASHBOARD_ROUTES: Record<string, string> = {
   admin: "/dashboard/admin",
@@ -31,99 +25,96 @@ const DASHBOARD_ROUTES: Record<string, string> = {
 export function Navbar() {
   const { data: session, isPending } = authClient.useSession();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const pathname = usePathname();
   const userRole = session?.user?.role?.toLowerCase() ?? "student";
   const dashboardHref = DASHBOARD_ROUTES[userRole] ?? "/dashboard/student";
-  
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container mx-auto flex min-h-16 items-center px-4 md:px-6 lg:px-8 relative">
         
         <Link href="/" className="flex items-center shrink-0">
-          <Image src={Logo} alt="Logo" width={35} height={35} priority />
+         <div className="flex flex-col items-start leading-none group cursor-pointer">
+  {/* Main Brand Name */}
+  <h1 className="font-black text-4xl sm:text-3xl tracking-tighter">
+    <span className="text-fuchsia-600 transition-colors duration-500 group-hover:text-fuchsia-400">
+      Ko
+    </span>
+    <span className="text-cyan-400 animate-shimmer drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]">
+      dex
+    </span>
+  </h1>
+  
+  {/* Subtitle */}
+  <span className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold text-slate-500 ml-1 transition-colors duration-500 group-hover:text-cyan-300">
+    Institute
+  </span>
+</div>
         </Link>
 
         {/* Center Navigation */}
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center justify-center">
-         <NavigationMenu className="relative">
+          <NavigationMenu className="relative">
             <NavigationMenuList className="gap-2">
               
+              {/* Courses Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent font-semibold text-sm">
-                  Products
+                  Courses
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  {/* Mega Menu Layout */}
-                  <div className="grid w-125 grid-cols-3 gap-3 p-4 md:w-162.5 lg:w-187.5">
-                    
-                    {/* Product List (Left 2 Columns) */}
-                    <ul className="col-span-2 grid grid-cols-2 gap-3">
-                      {productItems.map((item) => (
+                  <div className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150">
+                    <ul className="grid gap-3">
+                      {courseItems.map((item) => (
                         <ListItem key={item.title} title={item.title} href={item.href} icon={item.icon}>
                           {item.description}
                         </ListItem>
                       ))}
                     </ul>
-
-                    {/* Featured Section (Right 1 Column) */}
-                    <div className="col-span-1 flex flex-col justify-between rounded-md bg-muted/50 p-4 border border-border/50">
+                    <div className="flex flex-col justify-between rounded-md bg-muted/50 p-4 border border-border/50">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 text-primary font-bold text-sm">
                           <Sparkles className="h-4 w-4" />
-                          <span>Featured</span>
+                          <span>Special Offer</span>
                         </div>
-                        <h4 className="text-sm font-semibold leading-tight text-foreground">
-                          New: Advanced React Masterclass
-                        </h4>
-                        <p className="text-xs text-muted-foreground leading-snug">
-                          Join our most popular cohort starting this Monday.
-                        </p>
+                        <h4 className="text-sm font-semibold leading-tight">Full-Stack Bundle</h4>
+                        <p className="text-xs text-muted-foreground">Get access to all courses at 40% off.</p>
                       </div>
-                      <Link 
-                        href="/courses/react-masterclass" 
-                        className={clsx(buttonVariants({ size: "sm" }), "mt-4 w-full text-xs flex items-center justify-between group")}
-                      >
-                        Enroll Now
-                        <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                      <Link href="/courses" className={clsx(buttonVariants({ size: "sm" }), "mt-4 w-full text-xs")}>
+                        View All Courses
                       </Link>
                     </div>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
+              {/* FAQ Link */}
               <NavigationMenuItem>
                 <NavigationMenuLink asChild className={clsx(navigationMenuTriggerStyle(), "bg-transparent font-semibold cursor-pointer")}>
-                  <Link href="/pricing">
-                    Pricing
-                  </Link>
+                  <Link href="/faq">FAQ</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              {/* Contact Link */}
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={clsx(navigationMenuTriggerStyle(), "bg-transparent font-semibold cursor-pointer")}>
+                  <Link href="/contact">Contact</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
             </NavigationMenuList>
-
             <NavigationMenuViewport />
           </NavigationMenu>
         </div>
 
         {/* Right Side */}
         <div className="ml-auto flex items-center space-x-4">
-          <ThemeToggle />
           {!isPending && (
             session ? (
-<div className="flex items-center gap-3">
-                {/* Dashboard Button: Only shows when logged in */}
-                <Link 
-                  href={dashboardHref} 
-                  className={clsx(
-                    buttonVariants({ variant: "outline", size: "sm" }), 
-                    "hidden sm:flex items-center gap-2 border-primary/20 hover:bg-primary/5"
-                  )}
-                >
+              <div className="flex items-center gap-3">
+                <Link href={dashboardHref} className={clsx(buttonVariants({ variant: "outline", size: "sm" }), "hidden sm:flex items-center gap-2 border-primary/20 hover:bg-primary/5")}>
                   <LayoutDashboard className="h-4 w-4" />
                   <span className="font-semibold">Dashboard</span>
                 </Link>
-
                 <UserDropdown 
                   email={session.user.email ?? ""} 
                   image={session.user.image ?? ""} 
@@ -148,27 +139,22 @@ export function Navbar() {
       {/* Mobile Menu Overlay */}
       {mobileOpen && (
         <div className="md:hidden border-t bg-background p-6 space-y-6">
-          
-           <div className="space-y-4">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-2">Products</h4>
-              {productItems.map((item) => (
-                <Link key={item.title} href={item.href} className="flex items-center gap-3 px-2 text-lg font-medium" onClick={() => setMobileOpen(false)}>
-                  {item.icon} {item.title}
-                </Link>
-              ))}
-           </div>
-           {/* Mobile Featured Highlight */}
-           <div className="bg-muted p-4 rounded-lg">
-              <p className="text-xs font-bold text-primary mb-1 uppercase tracking-tighter">Newest Course</p>
-              <Link href="/courses/react-masterclass" className="font-semibold block mb-2" onClick={() => setMobileOpen(false)}>
-                Advanced React Masterclass
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-2">Courses</h4>
+            {courseItems.map((item) => (
+              <Link key={item.title} href={item.href} className="flex items-center gap-3 px-2 text-lg font-medium" onClick={() => setMobileOpen(false)}>
+                {item.icon} {item.title}
               </Link>
-           </div>
-           <div className="pt-4 border-t">
-              <Link href="/pricing" className="text-lg font-semibold px-2" onClick={() => setMobileOpen(false)}>
-                Pricing
-              </Link>
-           </div>
+            ))}
+          </div>
+          <div className="pt-4 border-t flex flex-col gap-4">
+            <Link href="/faq" className="text-lg font-semibold px-2 flex items-center gap-3" onClick={() => setMobileOpen(false)}>
+              <MessageCircle className="h-5 w-5 text-muted-foreground" /> FAQ
+            </Link>
+            <Link href="/contact" className="text-lg font-semibold px-2 flex items-center gap-3" onClick={() => setMobileOpen(false)}>
+              <Mail className="h-5 w-5 text-muted-foreground" /> Contact
+            </Link>
+          </div>
         </div>
       )}
     </header>
@@ -200,4 +186,3 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
   }
 );
 ListItem.displayName = "ListItem";
-

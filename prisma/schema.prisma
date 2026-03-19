@@ -237,6 +237,15 @@ model LessonProgress {
   @@unique([userId, lessonId])
 }
 
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
 enum UserRole {
   Student
   Educator

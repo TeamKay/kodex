@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Toaster } from "./_components/ui/sonner";
-import { ThemeProvider } from "./_components/ui/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,29 +13,29 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-
 export const metadata: Metadata = {
-  title: "Justdy | Learning made easy",
+  title: "Kodex Institute | CNA Masters",
   description: "Learn smarter with Justdy",
-  // icons: {
-  //   icon: "images/favicon.png", // <-- your new icon file
-  // },
 };
 
-export default function RootLayout({ children } : { children: React.ReactNode}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
-            {children}
-            <Toaster closeButton position="bottom-center"/>
+    <html lang="en">
+      {/* Added 'bg-cream' class here to ensure it covers the whole page */}
+      <body className={`${inter.variable} ${playfair.variable} font-sans bg-cream text-slate-900`}>
+        <main>
+          {children}
+        </main>
+        
+        <Toaster closeButton position="bottom-center" />
 
-            {/* <FooterPage/> */}
-          </ThemeProvider>
+        <footer className="py-12 border-t border-border bg-black/5">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-sm text-muted-foreground">
+              © 2026 CNA Training Academy. All Rights Reserved. State Approved License #49201.
+            </p>
+          </div>
+        </footer>
       </body>
     </html>
   );

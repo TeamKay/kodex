@@ -1,4 +1,3 @@
-
 import { Button } from "@/app/_components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/app/_components/ui/dropdown-menu";
 import { AdminCourseType } from "@/app/actions/educator-get-courses";
@@ -32,14 +31,12 @@ return (
               src={thumbnailUrl || "/placeholder-course.jpg"}
               alt={data.title}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-110" // Add these classes
-            />
+              className="object-cover transition-transform duration-300 group-hover:scale-110"/>
           </div>
           <div className="flex flex-col min-w-0">
             <Link
               href={`/dashboard/educator/courses/${data.id}/edit`}
-              className="font-semibold text-sm hover:underline truncate group-hover:text-primary transition-colors"
-            >
+              className="font-semibold text-sm hover:underline truncate group-hover:text-primary transition-colors">
               {data.title}
             </Link>
             <p className="text-xs text-muted-foreground line-clamp-1 italic">

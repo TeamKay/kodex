@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
-import Logo from "@/public/images/logo.png";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -71,7 +70,14 @@ export default function SignupForm() {
           {/* Header */}
           <div className="mb-10 text-center">
              <Link href="/" className="flex items-center pt-6 pb-6 justify-center gap-2 self-center font-medium">
-              <Image src={Logo} alt="Logo" width={120} height={60} />
+              <h1 className="font-black text-4xl tracking-tighter cursor-pointer group">
+  <span className="text-fuchsia-600 transition-colors duration-500 group-hover:text-fuchsia-400">
+    Ko
+  </span>
+  <span className="text-cyan-400 animate-pulse drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+    dex
+  </span>
+</h1>
             </Link>
             <h2 className="mb-2 text-4xl font-bold text-gray-900 dark:text-white/60">Create your account</h2>
             <p className="text-gray-600 dark:text-muted-foreground">

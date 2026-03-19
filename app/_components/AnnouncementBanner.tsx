@@ -64,7 +64,7 @@ export function AnnouncementBanner() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[12px] sm:text-[13px] font-medium text-white/90">
-                First Sale: <span className="font-bold text-white">20% OFF</span>
+                Early Registration: <span className="font-bold text-white">20% OFF</span>
               </span>
               <Link href="/courses" className="group flex items-center gap-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.05em] text-indigo-400 hover:text-indigo-300 transition-colors">
                 Claim Now!!! <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
