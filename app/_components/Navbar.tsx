@@ -7,7 +7,9 @@ import clsx from "clsx";
 import { authClient } from "@/lib/auth-client";
 import { UserDropdown } from "./UserDropdown";
 import { buttonVariants } from "./ui/button";
+import Logo from "@/public/images/logo.png"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle, NavigationMenuViewport } from "./ui/navigation-menu";
+import Image from "next/image";
 
 // Updated Course Items for the Dropdown
 const courseItems = [
@@ -33,22 +35,9 @@ export function Navbar() {
       <div className="container mx-auto flex min-h-16 items-center px-4 md:px-6 lg:px-8 relative">
         
         <Link href="/" className="flex items-center shrink-0">
-         <div className="flex flex-col items-start leading-none group cursor-pointer">
-  {/* Main Brand Name */}
-  <h1 className="font-black text-4xl sm:text-3xl tracking-tighter">
-    <span className="text-fuchsia-600 transition-colors duration-500 group-hover:text-fuchsia-400">
-      Ko
-    </span>
-    <span className="text-cyan-400 animate-shimmer drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]">
-      dex
-    </span>
-  </h1>
-  
-  {/* Subtitle */}
-  <span className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold text-slate-500 ml-1 transition-colors duration-500 group-hover:text-cyan-300">
-    Institute
-  </span>
-</div>
+         <Image src={Logo} alt="Logo" width={50} height={50}/>
+   
+
         </Link>
 
         {/* Center Navigation */}
